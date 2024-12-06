@@ -78,8 +78,8 @@ int tempo1 = 1000;
 float factor1 = 1.50;
 
 
-int melodia2[] = { NOTE_E4, NOTE_G4, NOTE_E4, NOTE_E4, NOTE_A4, NOTE_E4, NOTE_D4, NOTE_E4, NOTE_B4, NOTE_E4, NOTE_E4, NOTE_C5, NOTE_B4, NOTE_G4, NOTE_E4, NOTE_B4, NOTE_E5, NOTE_E4, NOTE_D4, NOTE_D4, NOTE_B3, NOTE_E4, NOTE_FS4, NOTE_E4, SILENCIO, NOTE_D4, SILENCIO, NOTE_E4, SILENCIO, NOTE_E4, NOTE_G4, NOTE_E4, NOTE_E4, NOTE_A4, NOTE_E4, NOTE_D4, NOTE_E4, NOTE_B4, NOTE_E4, NOTE_E4, NOTE_C5, NOTE_B4, NOTE_G4, NOTE_E4, NOTE_B4, NOTE_E5, NOTE_E4, NOTE_D4, NOTE_D4, NOTE_B3, NOTE_E4, NOTE_FS4, NOTE_E4, SILENCIO };
-int duracion2[] = { 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 4, 8, 8, 32, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 4, 8 };
+int melodia2[]        = { NOTE_E4, NOTE_G4, NOTE_E4, NOTE_E4, NOTE_A4, NOTE_E4, NOTE_D4, NOTE_E4, NOTE_B4, NOTE_E4, NOTE_E4, NOTE_C5, NOTE_B4, NOTE_G4, NOTE_E4, NOTE_B4, NOTE_E5, NOTE_E4, NOTE_D4, NOTE_D4, NOTE_B3, NOTE_E4, NOTE_FS4, NOTE_E4 ,SILENCIO, NOTE_D4,SILENCIO, NOTE_E4,SILENCIO,  NOTE_E4, NOTE_G4, NOTE_E4, NOTE_E4, NOTE_A4, NOTE_E4, NOTE_D4, NOTE_E4, NOTE_B4, NOTE_E4, NOTE_E4, NOTE_C5, NOTE_B4, NOTE_G4, NOTE_E4, NOTE_B4, NOTE_E5, NOTE_E4, NOTE_D4, NOTE_D4, NOTE_B3, NOTE_E4, NOTE_FS4, NOTE_E4 ,SILENCIO };
+int duracion2[]       = {    8   ,    8   ,    8   ,    8   ,    8   ,    8   ,    8   ,    8   ,   8    ,    8   ,    8   ,     8  ,    8   ,    8   ,    8   ,    8   ,    8   ,    8   ,    8   ,    8   ,    8   ,    8   ,    8   ,    4    ,    8   ,    8   ,   32   ,   8    ,    8    ,     8   ,    8   ,    8   ,    8   ,    8   ,    8   ,    8   ,    8   ,   8    ,    8   ,    8   ,     8  ,    8   ,    8   ,    8   ,    8   ,    8   ,    8   ,    8   ,    8   ,    8   ,    8   ,    8    ,    4    ,    8    };
 int tempo2 = 1400;
 float factor2 = 1.50;
 
