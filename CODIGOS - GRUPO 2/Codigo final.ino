@@ -4,9 +4,9 @@
 #include <SoftwareSerial.h>
 
 #define IN1 3
-#define IN2 4
-#define IN3 5
-#define IN4 6
+#define IN2 5
+#define IN3 6
+#define IN4 9
 #define VELOCIDAD_ALTA 255
 #define VELOCIDAD_BAJA 76
 
