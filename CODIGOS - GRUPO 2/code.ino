@@ -1,6 +1,6 @@
 #include <Wire.h>
-#include <LiquidCrystal_I2C.h>
 #include "LedControlMS.h"
+#include <SoftwareSerial.h>
 
 #define IN1 3
 #define IN2 4
@@ -12,6 +12,11 @@
 #define buzzer   10
 #define Trigger  2  
 #define Echo     3
+
+// Bluetooth
+#define bluetoothRx 7
+#define bluetoothTx 8
+SoftwareSerial bluetooth(bluetoothTx, bluetoothRx);
 
 byte Carita[8] = {
   B00000000,
@@ -46,95 +51,98 @@ byte CaritaE[8] = {
   B01000000
 };
 
-long t;
-long d;
-
-LiquidCrystal_I2C lcd(0x27, 16, 2);
 LedControl lc = LedControl(12, 11, 10, 1);
+
+bool motoresEncendidos = false;
 
 void setup() {
   pinMode(buzzer, OUTPUT);
   pinMode(Trigger, OUTPUT);
   pinMode(Echo, INPUT);
- 
-  lcd.init();
-  lcd.backlight();
- 
+
   for (int i = 0; i < 1; i++) {
     lc.shutdown(i, false);
     lc.setIntensity(i, 8);
     lc.clearDisplay(i);
   }
- 
+
   pinMode(IN1, OUTPUT);
   pinMode(IN2, OUTPUT);
   pinMode(IN3, OUTPUT);
   pinMode(IN4, OUTPUT);
+
+  // Configuración del Bluetooth
+  bluetooth.begin(9600);
 }
 
 void adelante() {
-  analogWrite(IN1, VELOCIDAD_ALTA);
-  analogWrite(IN2, 0);
-  analogWrite(IN3, VELOCIDAD_ALTA);
-  analogWrite(IN4, 0);
+  if (motoresEncendidos) {
+    analogWrite(IN1, VELOCIDAD_ALTA);
+    analogWrite(IN2, 0);
+    analogWrite(IN3, VELOCIDAD_ALTA);
+    analogWrite(IN4, 0);
+    mostrar_Carita();
+  }
 }
 
 void reversa() {
-  analogWrite(IN1, 0);
-  analogWrite(IN2, VELOCIDAD_ALTA);
-  analogWrite(IN3, 0);
-  analogWrite(IN4, VELOCIDAD_ALTA);
-
-  medirDistancia();
-  mostrar_CaritaC();
+  if (motoresEncendidos) {
+    analogWrite(IN1, 0);
+    analogWrite(IN2, VELOCIDAD_ALTA);
+    analogWrite(IN3, 0);
+    analogWrite(IN4, VELOCIDAD_ALTA);
+    mostrar_CaritaE();
+  }
 }
 
-void derecha() {
-  analogWrite(IN1, VELOCIDAD_ALTA);
-  analogWrite(IN2, 0);
-  analogWrite(IN3, VELOCIDAD_BAJA);
-  analogWrite(IN4, 0);
+void detener() {
+  if (motoresEncendidos) {
+    analogWrite(IN1, 0);
+    analogWrite(IN2, 0);
+    analogWrite(IN3, 0);
+    analogWrite(IN4, 0);
+    mostrar_CaritaC();
+  }
 }
 
-void izquierda() {
-  analogWrite(IN1, VELOCIDAD_BAJA);
-  analogWrite(IN2, 0);
-  analogWrite(IN3, VELOCIDAD_ALTA);
-  analogWrite(IN4, 0);
+void encenderMotores() {
+  motoresEncendidos = true;
+}
+
+void apagarMotores() {
+  motoresEncendidos = false;
+  detener();  // Asegurarse de que los motores se detengan
 }
 
 void loop() {
-  reversa();
-  delay(2000);
-  adelante();
-  delay(2000);
-}
+  if (bluetooth.available()) {
+    char comando = bluetooth.read();
 
-void medirDistancia() {
-  digitalWrite(Trigger, HIGH);
-  delayMicroseconds(10);
-  digitalWrite(Trigger, LOW);
-
-  t = pulseIn(Echo, HIGH);
-  d = t / 59;
-
-  Serial.print("Distancia: ");
-  Serial.print(d);
-  Serial.print("cm");
-  Serial.println();
- 
-  lcd.setCursor(3, 0);
-  lcd.print("Distancia");
-  lcd.setCursor(1, 1);
-  lcd.print(d);
-  lcd.print(" Cm");
-  delay(500);
-  lcd.clear();
-}
-
-void mostrar_CaritaC() {
-  for (int i = 0; i < 8; i++) {
-    lc.setRow(0, i, CaritaC[i]);
+    switch (comando) {
+      case 'A':
+        adelante();
+        break;
+      case 'R':
+        reversa();
+        break;
+      case 'S':
+        detener();
+        break;
+      case 'I':
+        izquierda();
+        break;
+      case 'D':
+        derecha();
+        break;
+      case 'E': // Encender motores
+        encenderMotores();
+        break;
+      case 'O': // Apagar motores
+        apagarMotores();
+        break;
+      default:
+        break;
+    }
   }
 }
 
@@ -144,7 +152,14 @@ void mostrar_Carita() {
   }
 }
 
+void mostrar_CaritaC() {
+  for (int i = 0; i < 8; i++) {
+    lc.setRow(0, i, CaritaC[i]);
+  }
+}
+
 void mostrar_CaritaE() {
   for (int i = 0; i < 8; i++) {
     lc.setRow(0, i, CaritaE[i]);
   }
+}
