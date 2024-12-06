@@ -71,6 +71,13 @@ SoftwareSerial bluetooth(7, 8);
 #define NOTE_D6  1175
 #define SILENCIO 0
 
+int melodia1[]        = { NOTE_E5, NOTE_E5, NOTE_E5, SILENCIO, NOTE_E5, NOTE_E5, NOTE_E5, SILENCIO, NOTE_E5, NOTE_G4, NOTE_C5, NOTE_D5, NOTE_E5, SILENCIO ,  NOTE_F5, NOTE_F5, NOTE_F5,SILENCIO , NOTE_E5, NOTE_E5, NOTE_E5,SILENCIO , NOTE_E5, NOTE_D5, NOTE_D5, NOTE_E5, NOTE_D5, NOTE_G4,SILENCIO , NOTE_E5, NOTE_E5, NOTE_E5,SILENCIO, NOTE_E5, NOTE_E5, NOTE_E5,SILENCIO, NOTE_E5, NOTE_G5, NOTE_C6, NOTE_D6, NOTE_E5,SILENCIO, NOTE_F5, NOTE_F5, NOTE_F5, NOTE_E5, NOTE_E5, NOTE_E5,SILENCIO, NOTE_E5, NOTE_D5, NOTE_D5, NOTE_E5, NOTE_D5, NOTE_G4 };
+int duracion1[]       = {   4    ,    4   ,   4    ,    4    ,    4   ,    4   ,    4   ,     4   ,    2   ,    4   ,   4    ,    4   ,   2    ,    4     ,    4    ,   4    ,    2   ,    4    ,   4   ,    4   ,    2   ,    4     ,   4   ,    4   ,    4   ,    4   ,    2    ,   4    ,   2     ,   4   ,    4   ,     2   ,    4   ,    4   ,    4   ,   2    ,   4    ,    4   ,    4   ,    4   ,    4   ,    2   ,    4   ,    4   ,    4   ,   2    ,   4    ,   4    ,   4    ,   4    ,    4   ,   4    ,    4    ,   4    ,   2    ,    4};
+
+int tempo1 = 1000;
+float factor1 = 1.50;
+
+
 int melodia2[] = { NOTE_E4, NOTE_G4, NOTE_E4, NOTE_E4, NOTE_A4, NOTE_E4, NOTE_D4, NOTE_E4, NOTE_B4, NOTE_E4, NOTE_E4, NOTE_C5, NOTE_B4, NOTE_G4, NOTE_E4, NOTE_B4, NOTE_E5, NOTE_E4, NOTE_D4, NOTE_D4, NOTE_B3, NOTE_E4, NOTE_FS4, NOTE_E4, SILENCIO, NOTE_D4, SILENCIO, NOTE_E4, SILENCIO, NOTE_E4, NOTE_G4, NOTE_E4, NOTE_E4, NOTE_A4, NOTE_E4, NOTE_D4, NOTE_E4, NOTE_B4, NOTE_E4, NOTE_E4, NOTE_C5, NOTE_B4, NOTE_G4, NOTE_E4, NOTE_B4, NOTE_E5, NOTE_E4, NOTE_D4, NOTE_D4, NOTE_B3, NOTE_E4, NOTE_FS4, NOTE_E4, SILENCIO };
 int duracion2[] = { 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 4, 8, 8, 32, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 4, 8 };
 int tempo2 = 1400;
@@ -84,6 +91,26 @@ void melodiaCrazyFrog() {
     int pausa2 = duracionNota2 * factor2;
     delay(pausa2);
     noTone(buzzer);
+  }
+}
+
+void melodiaNavidad()
+{
+  pinMode(buzzer, OUTPUT);
+  
+  for(int i = 0 ; i < sizeof (melodia1) /2 ; i++ )
+  
+  {
+    
+  	int duracionNota1 = tempo1 / duracion1[ i ];
+    
+    tone (buzzer, melodia1[ i ], duracionNota1 );
+  
+    int pausa1 = duracionNota1 * factor1;
+    delay( pausa1 );
+    
+    noTone( buzzer );
+      
   }
 }
 
